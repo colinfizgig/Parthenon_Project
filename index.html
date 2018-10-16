@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<meta charset="utf-8" />
+<title>Hello, World! • A-Frame</title>
+<meta name="description" content="Hello, World! • A-Frame" />
+<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+<script src="./components/camera-cube-env.js"></script>
+<script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
+<script src="./components/aframe-teleport-controls.js"></script>
+
+</head>
+<body class="a-body ">
+<a-scene background="color:#5f5f5f" class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="autoUpdate: true; type:pcfsoft">
+
+<a-assets>
+	<img id="sky" src="./textures/skyA.jpg">
+	<a-asset-item id="acropolis" src="./Objects/AcropolisBase.glb"></a-asset-item>
+	<a-asset-item id="acropolisWalk" src="./Objects/AcropolisWalk.glb"></a-asset-item>
+	<a-asset-item id="athenaParthenos" src="./Objects/AthenaParthenos.glb"></a-asset-item>
+	<a-asset-item id="athenaPromachos" src="./Objects/AthenaPromachos.glb"></a-asset-item>
+	<a-asset-item id="erechthion" src="./Objects/Erechthion.glb"></a-asset-item>
+	<a-asset-item id="parthenon" src="./Objects/Parthenon.glb"></a-asset-item>
+	<a-asset-item id="sanctuaryD" src="./Objects/SanctuaryDoors.glb"></a-asset-item>
+	<a-asset-item id="treasuryD" src="./Objects/TreasuryDoors.glb"></a-asset-item>
+
+</a-assets>
+
+	<a-sky src="#sky" material="" geometry="" position="0 -300 0" rotation="0 80 0"></a-sky>
+
+	<a-entity id="worldOffset" position="-49.96 31.290 166.997">
+		<a-entity id="acropolis1" gltf-model="#acropolis" camera-cube-env="resolution:512; interval: 300" shadow="" position="0 0 0" scale="1 1 1"></a-entity>
+		<a-entity id="athenaStatue1" gltf-model="#athenaParthenos" camera-cube-env="resolution:512; interval: 2000" shadow="" position="0 0 0" scale="1 1 1"></a-entity>
+		<a-entity id="athenaStatue2" gltf-model="#athenaPromachos" camera-cube-env="resolution:512; interval: 1400" shadow="" position="0 0 0" scale="1 1 1"></a-entity>
+		<a-entity id="erecthionBldg" gltf-model="#erechthion" camera-cube-env="resolution:256; interval: 500" shadow="" position="0 0 0" scale="1 1 1"></a-entity>
+		<a-entity id="parthenonBldg" gltf-model="#parthenon" camera-cube-env="resolution:512; interval: 600" shadow="" position="0 0 0" scale="1 1 1"></a-entity>
+		<a-entity id="sanctuaryDoors" gltf-model="#sanctuaryD" camera-cube-env="resolution:512; interval: 800" shadow="" position="0 0 0" scale="1 1 1"></a-entity>
+		<a-entity id="treasuryDoors" gltf-model="#treasuryD" camera-cube-env="resolution:512; interval: 800" shadow="" position="0 0 0" scale="1 1 1"></a-entity>
+
+		<a-entity id="walkMesh" class="navmesh" gltf-model="#acropolisWalk" position="0 0 0" scale="1 1 1" nav-mesh="" visible="false"></a-entity>
+
+		<a-entity position="85.810 55.49 -133" id="spotlight" light="castShadow:true;penumbra:0.78;angle:20.59;target:#lightTarget;shadowMapHeight:2048;shadowMapWidth:2048;shadowCameraFov:50;shadowCameraFar: 300; shadowCameraVisible: false; shadowCameraTop: 139.86; shadowCameraRight: 70.2; shadowCameraBottom: -84.5; shadowCameraLeft: -76.68"></a-entity>
+
+		<a-entity light="type:hemisphere;groundColor:#4a4137;color:#ceeaf7;angle:0;distance:100;decay:0;intensity:0.13;target:#acropolis1" rotation="0 0 0.01" visible=""></a-entity>
+		
+		
+		<a-entity  position=" 2.858 1.743 4.981" light="type:point;castShadow:true;distance:100;penumbra:0.4;shadowCameraFar:100;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;color:#ffffff;decay:10;intensity:0.5" id="brazierLight-2"></a-entity>
+ 
+		<a-entity position=" -2.758 1.651 4.969" light="type:point;castShadow:true;distance:100;penumbra:0.4;shadowCameraFar:100;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;color:#ffffff;decay:10;intensity:0.5" id="brazierLight"></a-entity>
+	
+		<a-entity position="0 3.207 24.208" light="type:spot;castShadow:true;distance:80;penumbra:0.75;shadowCameraFar:300;shadowCameraFov:60;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;decay:3;angle:40;color:#94d7fe" rotation="-5.58 0 0" id="Doorlight" visible=""></a-entity>
+		
+		<a-entity id="lightTarget" position="59.121 0 -69.462"></a-entity>
+		
+	</a-entity>
+	
+	
+ 
+	<a-entity id="rig" movement-controls="controls: keyboard, touch; speed: 0.2; constrainToNavMesh: true;" position="0 0 0" rotation="0 180 0">
+
+        <a-entity id="head" position="0 1.6 0" camera="userHeight: 1.6" look-controls="pointerLockEnabled: true"></a-entity>
+        <a-entity teleport-controls="cameraRig: #rig; teleportOrigin: #head; button: trigger; collisionEntities: .navmesh; landingMaxAngle: 80"
+          vive-controls="hand: left"
+          oculus-touch-controls="hand: left"
+          microsoft-motion-controls="hand: left"
+          daydream-controls="left" gearvr-controls="left"
+		  x-button-listener y-button-listener>
+        </a-entity>
+        <a-entity teleport-controls="cameraRig: #rig; teleportOrigin: #head; button: trigger; collisionEntities: .navmesh; landingMaxAngle: 80"
+          vive-controls="hand: right"
+          microsoft-motion-controls="hand: right"
+          oculus-touch-controls="hand: right"
+          daydream-controls="right" gearvr-controls="right"
+		  a-button-listener b-button-listener grip-listener surface-listener>
+        </a-entity>
+  </a-entity>
+
+</a-scene>
+
+<script>
+	//document.getElementById("rig").components.position.el.object3D.position.set(49.96, -31.290, -166.997);
+	//position="49.96 -31.290 -166.997"
+</script>
+</body>
+</html>
