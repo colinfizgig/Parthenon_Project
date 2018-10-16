@@ -26,11 +26,12 @@ AFRAME.registerComponent('camera-cube-env', {
 
 	          this.done = false;
 			  var myCam = this.cam;
+			  var myEl = this.el;
+			  var myMesh = this.el.getObject3D('mesh');
 
-			  document.querySelector('a-scene').addEventListener('loaded', function () {
-				  this.mesh = this.el.getObject3D('mesh');
-				  if(this.mesh){
-					this.mesh.traverse( function( child ) { 
+			  document.querySelector('a-scene').addEventListener('loaded', function (myCam, myEl, myMesh) {
+				  if(myMesh){
+					myMesh.traverse( function( child ) { 
 						if ( child instanceof THREE.Mesh ) {
 							child.material.envMap = myCam.renderTarget.texture;
 							child.material.needsUpdate = true;
