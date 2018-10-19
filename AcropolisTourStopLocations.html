@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <style id="stndz-style"></style>
+
+    <meta http-equiv="origin-trial" data-feature="WebVR (For Chrome M59+)" data-expires="2017-07-28" content="ArFv1ZeTwzkhjNE00uAE+XtiQB41fwqG/TqlFMLrepd9sforQSvQE/tgfIbUMYNuNre4QR1k4/z8xp2mV3dbhwwAAABeeyJvcmlnaW4iOiJodHRwczovL2FmcmFtZS5pbzo0NDMiLCJmZWF0dXJlIjoiV2ViVlIxLjEiLCJleHBpcnkiOjE1MDEyMTcwMDIsImlzU3ViZG9tYWluIjp0cnVlfQ==" />
+    <meta charset="utf-8" />
+    <title>Tour stops of Acropolis</title>
+    <meta name="description" content="Tour stops of Acropolis" />
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  </head>
+
+  <body class="a-body ">
+    <a-scene class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" scale="" shadow="type: pcfsoft">
+      <a-assets>
+        <a-asset-item id="acropolis" src="AcropolisModel.glb" />
+      </a-assets>
+
+      <a-camera position="52 -30.5 -166"></a-camera>
+
+      <a-entity gltf-model="#acropolis" />
+
+      <a-link title="Stop #1: The Pylons/Front Gate" position="53 -30.5 -172"></a-link>
+      <a-link title="Stop #2: The Central ramp" position="53 -15 -135"></a-link>
+      <a-link title="Stop #3: Introduction of the Propylaea" position="49 -12 -129"></a-link>
+      <a-link title="Stop #4: The Propylaea's Ceiling and Pillars" position="55 -7 -116"></a-link>
+      <a-link title="Stop #5: The Pinakotheke" position="66 -6 -119"></a-link>
+      <a-link title="Stop #6: The Right side/South wing" position="40 -6 -117"></a-link>
+      <a-link title="Stop #7: The Pedestal with the Four-Horse Chariot" position="66 -5 -130"></a-link>
+      <a-link title="Stop #8: Introduction of the Athena Nike" position="40 -9 -124.2"></a-link>
+      <a-link title="Stop #9: About the Location of the Athena Nike" position="43.3 -7.8 -135"></a-link>
+      <a-link title="Stop #10: The Inside of the Athena Nike" position="40 -9 -128"></a-link>
+      <a-link title="Stop #11: The backside of, or exiting the Propylaia" position="55 -6.5 -103"></a-link>
+
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
