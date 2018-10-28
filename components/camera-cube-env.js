@@ -79,12 +79,13 @@ AFRAME.registerComponent('camera-cube-env', {
 	   * Generally modifies the entity based on the data.
 	   */
 	  update: function (oldData) {
-		this.counter = this.data.interval;
+			this.counter = this.data.interval;
 				this.cam = new THREE.CubeCamera( 1.0, this.data.distance, this.data.resolution);
 			  this.cam.renderTarget.texture.minFilter = THREE.LinearMipMapLinearFilter;
 	          this.el.object3D.add( this.cam );
 	          this.done = false;
 			  var myCam = this.cam;
+			  
 	          this.mesh = this.el.getObject3D('mesh');
 	          if(this.mesh){
 	            this.mesh.traverse( function( child ) { 
