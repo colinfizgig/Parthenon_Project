@@ -5,11 +5,13 @@
 		<meta name="description" content="Exploring the Parthenon and the Acropolis in XR" />
 		
 		<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+		<script src="./components/aframe-lod.js"></script>
 		<script src="./components/camera-cube-env.js"></script>
 		<script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
 		<script src="./components/aframe-teleport-controls.js"></script>
 		<script src="./components/normal-scale-component.js"></script>
 		<script src="./components/aframe-html-shader.min.js"></script>
+		<script src="./components/cube-env-map.js"></script>
 		<style>
 			html {
 				font-size: 1.5vm;
@@ -229,39 +231,48 @@
 		
 			
 
-		<a-scene id="ascene" background="color:#5f5f5f; opacity:0;" class="fullscreen" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="autoUpdate: true; type:pcfsoft" visible="true" >
+		<a-scene id="ascene" background="color:#5f5f5f; opacity:0;" class="fullscreen" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="autoUpdate: true; type:pcfsoft" visible="true">
 
 			<a-assets timeout="10000">
-				<img id="sky" src="./textures/skyA.jpg" crossorigin="anonymous">
-				<a-asset-item id="acropolis" src="./Objects/AcropolisBase.glb" ></a-asset-item>
+				<img id="sky" src="./textures/AthensSky.jpg" crossorigin="anonymous">
+				<a-asset-item id="acropolis" src="./Objects/Acropolis.glb" ></a-asset-item>
 				<a-asset-item id="acropolisWalk" src="./Objects/AcropolisWalk.glb" ></a-asset-item>
 				<a-asset-item id="athenaParthenos" src="./Objects/AthenaParthenos.glb" ></a-asset-item>
-				<a-asset-item id="athenaPromachos" src="./Objects/AthenaPromachos.glb" ></a-asset-item>
-				<a-asset-item id="erechthion" src="./Objects/Erechthion.glb" ></a-asset-item>
+				
+				<a-asset-item id="athenaPromachosH" src="./Objects/PromachosLOD0.glb" ></a-asset-item>
+		
+				<a-asset-item id="erechthion" src="./Objects/Erechtheion.glb" ></a-asset-item>
+				<a-asset-item id="cariatides" src="./Objects/Cariatides.glb" ></a-asset-item>
 				<a-asset-item id="parthenon" src="./Objects/Parthenon.glb" ></a-asset-item>
 				<a-asset-item id="sanctuaryD" src="./Objects/SanctuaryDoors.glb" ></a-asset-item>
 				<a-asset-item id="treasuryD" src="./Objects/TreasuryDoors.glb" ></a-asset-item>
 
 			</a-assets>
 
-			<a-sky src="#sky" material="" geometry="" position="0 -300 0" rotation="0 80 0"></a-sky>
+			<a-sky src="#sky" material="" geometry="" position="0 0 0" rotation="0 140 0"></a-sky>
 
 			<a-entity id="worldOffset" position="-49.96 31.290 166.997">
 			
-				<a-entity id="acropolis1" gltf-model="#acropolis" camera-cube-env="resolution:512; interval: 300" shadow="" position="0 0 0" scale="1 1 1">
+				<a-entity id="acropolis1" gltf-model="#acropolis" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
 				
 				<a-entity id="athenaStatue1" gltf-model="#athenaParthenos" camera-cube-env="resolution:512; interval: 2000" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
-				<a-entity id="athenaStatue2" gltf-model="#athenaPromachos" camera-cube-env="resolution:512; interval: 1400" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				
+				<a-entity id="athenaStatue2" position="55.107 -1.325 -61.014" scale="5.352 5.352 5.352" rotation="180 -10.4 180">
+					<a-entity id="athenaStatue2H" gltf-model="#athenaPromachosH" shadow="" position="0 0 0" scale="1 1 1" cube-env-map="path: ./textures/; extension: jpg;"></a-entity>
 				</a-entity>
-				<a-entity id="erecthionBldg" gltf-model="#erechthion" camera-cube-env="resolution:256; interval: 500" shadow="" position="0 0 0" scale="1 1 1">
+				<a-entity id="wives" position="0 0 0" 0>
+					<a-entity id="cariatidsHigh" gltf-model="#cariatides" shadow="" position="0 0 0" scale="1 1 1" cube-env-map="path: ./textures/; extension: jpg;" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0"></a-entity>
 				</a-entity>
-				<a-entity id="parthenonBldg" gltf-model="#parthenon" camera-cube-env="resolution:512; interval: 600" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+	  
+				<a-entity id="erecthionBldg" gltf-model="#erechthion" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
-				<a-entity id="sanctuaryDoors" gltf-model="#sanctuaryD" camera-cube-env="resolution:512; interval: 800" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				<a-entity id="parthenonBldg" gltf-model="#parthenon" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
-				<a-entity id="treasuryDoors" gltf-model="#treasuryD" camera-cube-env="resolution:512; interval: 800" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				<a-entity id="sanctuaryDoors" gltf-model="#sanctuaryD" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				</a-entity>
+				<a-entity id="treasuryDoors" gltf-model="#treasuryD" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
 
 				<a-entity id="walkMesh" class="navmesh" gltf-model="#acropolisWalk" position="0 0 0" scale="1 1 1" nav-mesh="" visible="false">
@@ -270,7 +281,7 @@
 				<a-entity position="85.810 55.49 -133" id="spotlight" light="castShadow:true;penumbra:0.78;angle:20.59;target:#lightTarget;shadowMapHeight:2048;shadowMapWidth:2048;shadowCameraFov:50;shadowCameraFar: 300; shadowCameraVisible: false; shadowCameraTop: 139.86; shadowCameraRight: 70.2; shadowCameraBottom: -84.5; shadowCameraLeft: -76.68">
 				</a-entity>
 
-				<a-entity light="type:hemisphere;groundColor:#4a4137;color:#ceeaf7;angle:0;distance:100;decay:0;intensity:0.13;target:#acropolis1" rotation="0 0 0.01" visible="">
+				<a-entity light="type:hemisphere;groundColor:#4a4137;color:#ceeaf7;angle:0;distance:100;decay:0;intensity:0.210;target:#acropolis1" rotation="0 0 0.01" visible="">
 				</a-entity>
 			
 			
@@ -289,123 +300,244 @@
 				</a-entity>
 	
 				<a-entity id="tourPoint1" position="51 -30.5 -172" rotation="0 0 0">
-					<a-entity id="hudContent1" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop1; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>		
+					<a-lod>
+						<a-entity id="hudContent1" geometry="primitive:plane;height:4; width:2" material="transparent: true; color: #ffffff; shader: html; target: #tourStop1; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0" position="0 -.5 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
-				<a-entity id="tourPoint2" position="53 -15 -135.538" rotation="0 -177.680 0">
-					<a-entity id="hudContent2" geometry="primitive:plane;height:4; width:2" position="2 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop2; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+	
+				<a-entity id="tourPoint2" position="53 -15 -135.538" rotation="0 -175.680 0">
+					<a-lod>
+						<a-entity id="hudContent2" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop2; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPoint3" position="56.62 -12.0 -129.711" rotation="0 -176.457 0">
-					<a-entity id="hudContent3" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop3; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent3" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop3; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPoint4" position="51.799 -7.620 -119.681" rotation="0 -178.430 0">
-					<a-entity id="hudContent4" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop4; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent4" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop4; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				<a-entity id="tourPoint5" position="62.426 -5.692 -113.794" rotation="0 -88.445 0">
-					<a-entity id="hudContent5" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop5; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent5" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop5; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPoint6" position="38.150 -6.000 -117.486" rotation="0 94.435 0">
-					<a-entity id="hudContent6" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop6; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent6" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop6; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPoint7" position="66.000 -10.206 -130" rotation="0 -89.988 0">
-					<a-entity id="hudContent7" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop7; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent7" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop7; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPoint8" position="42.700 -7.935 -125.891" rotation="0 -176.021 0">
-					<a-entity id="hudContent8" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop8; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent8" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop8; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				<a-entity id="tourPoint9" position="33.046 -7.800 -128.318" rotation="0 73.363 0">
-					<a-entity id="hudContent9" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop9; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent9" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop9; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPoint10" position="42.365 -8.070 -128.926" rotation="0 -16.137 0">
-					<a-entity id="hudContent10" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop10; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent10" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop10; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPoint11" position="58.808 -5.307 -91.984" rotation="0 -176.075 0">
-					<a-entity id="hudContent11" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop11; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent11" geometry="primitive:plane;height:4; width:2" position="0 -.5 0" material="transparent: true; color: #ffffff; shader: html; target: #tourStop11; width: 1024; height: 2048; opacity: 1.0; fps: 0; ratio: width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
-				<a-entity id="tourPointE1" position="58.427965769149935 0.34640534830740144 16.31008628916196" rotation="0 -8.543092166918358 0">
-					<a-entity id="hudContent12" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE1;width:1024;height:2048;ratio:width">
-					</a-entity>
+				<a-entity id="tourPointE1" position="58.427 0.346 16.310" rotation="0 -8.543 0">
+					<a-lod>
+						<a-entity id="hudContent12" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE1;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
-				<a-entity id="tourPointE2" position="58.89835609560616 1.4517251590417057 11.635566773245372" rotation="0 -4.711436484964144 0">
-					<a-entity id="hudContent13" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE2;width:1024;height:2048;ratio:width">
-					</a-entity>
+				<a-entity id="tourPointE2" position="58.898 1.451 11.635" rotation="0 -4.7114364849641 0">
+					<a-lod>
+						<a-entity id="hudContent13" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE2;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
 				<a-entity id="tourPointE3" position="45.266 0.842 -12.099" rotation="0 1.035 0">
-					<a-entity id="hudContent14" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE3;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent14" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE3;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
 				<a-entity id="tourPointE4" position="52.00907215543766 0.48606749150435924 0.07512708617217356" rotation="0 -99.62589532579756 0">
-					<a-entity id="hudContent15" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE4;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent15" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE4;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
 				<a-entity id="tourPointE5" position="63.81611300063939 -2.4560553703797208 -8.781913073457176" rotation="0 172.9159318386946 0">
-					<a-entity id="hudContent16" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE5;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent16" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE5;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
 				<a-entity id="tourPointE6" position="76.46710283484497 -2.1383907026961193 -2.159337254107143" rotation="0 82.61293664586405 0">
-					<a-entity id="hudContent17" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE6;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent17" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE6;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
 				<a-entity id="tourPointE7" position="67.9051979795758 -1.9670900071683004 0.9175815841910122" rotation="0 83.28203245705544 0">
-					<a-entity id="hudContent18" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE7;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent18" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE7;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
 				<a-entity id="tourPointE8" position="67.9027227424716 2.1732522904635143 0.9341022523909857" rotation="0 83.11304336101236 0">
-					<a-entity id="hudContent19" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE8;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent19" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE8;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
 				<a-entity id="tourPointE9" position="69.3729962452584 -2.006818988636814 13.36480718875356" rotation="0 84.58014623536522 0">
-					<a-entity id="hudContent20" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE9;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent20" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE9;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
 				<a-entity id="tourPointE10" position="78.20992782715126 -2.3868347869278974 9.336792950186435" rotation="0 -88.75944270456019 0">
-					<a-entity id="hudContent21" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE10;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent21" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopE10;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 				
 				<a-entity id="tourPointP1" position="22.83640027993406 1.147209544687465 7.391706069099442" rotation="0 91.60529268594183 0">
-					<a-entity id="hudContent22" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP1;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent22" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP1;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPointP2" position="-2.262 2.782 24.761" rotation="0 91.60529268594183 0">
-					<a-entity id="hudContent23" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP2;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent23" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP2;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPointP3" position="-2.666 2.740 6.436" rotation="0 -1.3226573706905407 0">
-					<a-entity id="hudContent24" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP3;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent24" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP3;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
+				
 				<a-entity id="tourPointP4" position="-1.586 2.620 -24.983" rotation="0 91.60529268594183 0">
-					<a-entity id="hudContent25" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP4;width:1024;height:2048;ratio:width">
-					</a-entity>
+					<a-lod>
+						<a-entity id="hudContent25" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP4;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
-				<a-entity id="tourPointP5" position="50.642 -2.562 -62.838831296161985" rotation="0 178.444 0">
-					<a-entity id="hudContent26" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP5;width:1024;height:2048;ratio:width">
-					</a-entity>
+				
+				<a-entity id="tourPointP5" position="50.642 -2.562 -62.838" rotation="0 178.444 0">
+					<a-lod>
+						<a-entity id="hudContent26" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP5;width:1024;height:2048; ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
-				<a-entity id="tourPointP6" position="36.113 -4.105 -84.892" rotation="0 87.90003309248227 0">
-					<a-entity id="hudContent27" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP6;width:1024;height:2048;ratio:width">
-					</a-entity>
+				
+				<a-entity id="tourPointP6" position="36.113 -4.105 -84.892" rotation="0 87.900 0">
+					<a-lod>
+						<a-entity id="hudContent27" geometry="primitive:plane;height:4;width:2" position="0 -0.5 0" material="transparent:true;color:#ffffff;shader:html;target:#tourStopP6;width:1024;height:2048;ratio:width; side: double" lod-level="level: 0">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
 				</a-entity>
 			
 					
