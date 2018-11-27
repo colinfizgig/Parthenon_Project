@@ -234,19 +234,22 @@
 		<a-scene id="ascene" background="color:#5f5f5f; opacity:0;" class="fullscreen" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="autoUpdate: true; type:pcfsoft" visible="true" stats>
 
 			<a-assets timeout="10000">
-				<img id="sky" src="./textures/skyA.jpg" crossorigin="anonymous">
-				<a-asset-item id="acropolis" src="./Objects/AcropolisBase.glb"></a-asset-item>
-				<a-asset-item id="acropolisWalk" src="./Objects/AcropolisWalk.glb"></a-asset-item>
-				<a-asset-item id="athenaParthenos" src="./nomaps/AthenaParthenos.glb"></a-asset-item>
-				<a-asset-item id="athenaPromachos" src="./nomaps/promachosNoNormal.glb"></a-asset-item>
-				<a-asset-item id="erechthion" src="./nomaps/erechtheionNoNormal.glb"></a-asset-item>
-				<a-asset-item id="parthenon" src="./nomaps/ParthnonNoNormal.glb"></a-asset-item>
-				<a-asset-item id="sanctuaryD" src="./nomaps/sanctuaryDoors.glb"></a-asset-item>
-				<a-asset-item id="treasuryD" src="./nomaps/treasuryDoors.glb"></a-asset-item>
+				<img id="sky" src="./textures/AthensSky.jpg" crossorigin="anonymous">
+				<a-asset-item id="acropolis" src="./Objects/Acropolis.glb" ></a-asset-item>
+				<a-asset-item id="acropolisWalk" src="./Objects/AcropolisWalk.glb" ></a-asset-item>
+				<a-asset-item id="athenaParthenos" src="./Objects/AthenaParthenos.glb" ></a-asset-item>
+				
+				<a-asset-item id="athenaPromachosH" src="./Objects/PromachosLOD0.glb" ></a-asset-item>
+		
+				<a-asset-item id="erechthion" src="./Objects/Erechtheion.glb" ></a-asset-item>
+				<a-asset-item id="cariatides" src="./Objects/Cariatides.glb" ></a-asset-item>
+				<a-asset-item id="parthenon" src="./Objects/Parthenon.glb" ></a-asset-item>
+				<a-asset-item id="sanctuaryD" src="./Objects/SanctuaryDoors.glb" ></a-asset-item>
+				<a-asset-item id="treasuryD" src="./Objects/TreasuryDoors.glb" ></a-asset-item>
 
 			</a-assets>
 
-			<a-sky src="#sky" material="" geometry="" position="0 -300 0" rotation="0 80 0"></a-sky>
+			<a-sky src="#sky" material="" geometry="" position="0 0 0" rotation="0 140 0"></a-sky>
 
 			<a-entity id="worldOffset" position="-49.96 31.290 166.997">
 			
@@ -256,6 +259,9 @@
 				<a-entity id="athenaStatue1" gltf-model="#athenaParthenos" camera-cube-env="resolution:512; interval: 2000" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
 				<a-entity id="athenaStatue2" gltf-model="#athenaPromachos" camera-cube-env="resolution:512; interval: 1400" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				</a-entity>
+				<a-entity id="wives" position="0 0 0" 0>
+					<a-entity id="cariatidsHigh" gltf-model="#cariatides" shadow="" position="0 0 0" scale="1 1 1" cube-env-map="path: ./textures/; extension: jpg;" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0"></a-entity>
 				</a-entity>
 				<a-entity id="erecthionBldg" gltf-model="#erechthion" camera-cube-env="resolution:256; interval: 500" shadow="" position="0 0 0" scale="1 1 1">
 				</a-entity>
