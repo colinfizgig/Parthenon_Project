@@ -4,7 +4,9 @@
 		<title>The Parthenon Project</title>
 		<meta name="description" content="Exploring the Parthenon and the Acropolis in XR" />
 		
-		<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+		<script src="./js/aframe-master-xr.js"></script>
+		<script src="./js/three.xr.js"></script>
+		<script src="./js/aframe-xr.js"></script>
 		<script src="./components/aframe-lod.js"></script>
 		<script src="./components/camera-cube-env.js"></script>
 		<script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
@@ -94,30 +96,11 @@
 	</head>
 	
 	<body class="a-body">
-	
-		<div id="loadScreen" class="loadScreen">
-			<div id="loadTitle">
-				THE PARTHENON PROJECT
-			</div>
-			<div id="loadBarGroup">
-				<div id="loadText">
-					Loading Objects...
-				</div>
-				<div id="loadIndicator">
-					<div id="loadBar"></div>
-					<div id="loadAmt">10%</div>
-				</div>
-			</div>
-		</div>
-		<div id="loadBlackout">
-		</div>
-		
-			
 
-		<a-scene id="ascene" background="color:#5f5f5f; opacity:0;" class="fullscreen" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="autoUpdate: true; type:pcfsoft" visible="true">
+
+		<a-scene id="ascene">
 
 			<a-assets timeout="10000">
-				<img id="sky" src="./textures/AthensSky.jpg" crossorigin="anonymous">
 				<img id="tp1" src="./textures/tp1.png" crossorigin="anonymous">
 				<img id="tp2" src="./textures/tp2.png" crossorigin="anonymous">
 				<img id="tp3" src="./textures/tp3.png" crossorigin="anonymous">
@@ -155,10 +138,10 @@
 				<a-asset-item id="sanctuaryD" src="./Objects/ParthenonDoorsCombined.glb" ></a-asset-item>
 
 			</a-assets>
+			
+			<a-entity xr="ar: true; vr: false; magicWindow: false"></a-entity>
 
-			<a-sky src="#sky" material="" geometry="" position="0 0 0" rotation="0 140 0"></a-sky>
-
-			<a-entity id="worldOffset" position="-49.96 31.290 166.997">
+			<a-entity id="diorama" position="0 0.5 1"  scale="0.1 0.1 0.1" visible="false">
 			
 				<a-entity id="acropolis1" gltf-model="#acropolis" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
@@ -179,20 +162,20 @@
 				<a-entity id="walkMesh" class="navmesh" gltf-model="#acropolisWalk" position="0 0 0" scale="1 1 1" nav-mesh="" visible="false">
 				</a-entity>
 
-				<a-entity position="85.810 55.49 -133" id="spotlight" light="castShadow:true;penumbra:0.78;angle:20.59;target:#lightTarget;shadowMapHeight:2048;shadowMapWidth:2048;shadowCameraFov:50;shadowCameraFar: 300; shadowCameraVisible: false; shadowCameraTop: 139.86; shadowCameraRight: 70.2; shadowCameraBottom: -84.5; shadowCameraLeft: -76.68">
+				<a-entity position="85.810 55.49 -133" id="spotlight" light="castShadow:false;penumbra:0.78;angle:20.59;target:#lightTarget;shadowMapHeight:2048;shadowMapWidth:2048;shadowCameraFov:50;shadowCameraFar: 300; shadowCameraVisible: false; shadowCameraTop: 139.86; shadowCameraRight: 70.2; shadowCameraBottom: -84.5; shadowCameraLeft: -76.68">
 				</a-entity>
 
 				<a-entity light="type:hemisphere;groundColor:#4a4137;color:#ceeaf7;angle:0;distance:100;decay:0;intensity:0.210;target:#acropolis1" rotation="0 0 0.01" visible="">
 				</a-entity>
 			
 			
-				<a-entity  id="brazierLight-2" position=" 2.858 1.743 4.981" light="type:point;castShadow:true;distance:100;penumbra:0.4;shadowCameraFar:100;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;color:#ffffff;decay:10;intensity:0.5" >
+				<a-entity  id="brazierLight-2" position=" 2.858 1.743 4.981" light="type:point;castShadow:false;distance:100;penumbra:0.4;shadowCameraFar:100;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;color:#ffffff;decay:10;intensity:0.5" >
 				</a-entity>
 	 
-				<a-entity id="brazierLight" position=" -2.758 1.651 4.969" light="type:point;castShadow:true;distance:100;penumbra:0.4;shadowCameraFar:100;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;color:#ffffff;decay:10;intensity:0.5">
+				<a-entity id="brazierLight" position=" -2.758 1.651 4.969" light="type:point;castShadow:false;distance:100;penumbra:0.4;shadowCameraFar:100;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;color:#ffffff;decay:10;intensity:0.5">
 				</a-entity>
 		
-				<a-entity id="Doorlight" position="0 3.207 24.208" light="type:spot;castShadow:true;distance:50;penumbra:1.0;shadowCameraFar:150;shadowCameraFov:60;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;decay:1.5;angle:40;color:#e1f4ff" rotation="-5.58 0 0" visible="" target="#StatueLightTarget">
+				<a-entity id="Doorlight" position="0 3.207 24.208" light="type:spot;castShadow:false;distance:50;penumbra:1.0;shadowCameraFar:150;shadowCameraFov:60;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;decay:1.5;angle:40;color:#e1f4ff" rotation="-5.58 0 0" visible="" target="#StatueLightTarget">
 				</a-entity>
 			
 				<a-entity id="lightTarget" position="59.121 0 -69.462">
@@ -443,35 +426,26 @@
 			
 					
 			</a-entity>
-		
-		
-	 
-			<a-entity id="rig" movement-controls="controls: keyboard, touch; speed: 0.2; constrainToNavMesh: true;" position="1.0 0 0" rotation="0 180 0">
-
-					<a-entity id="head" position="0 1.6 0" camera="userHeight: 1.6" look-controls="pointerLockEnabled: true">
-					</a-entity>
-
-						
-				
-					<a-entity teleport-controls="cameraRig: #rig; teleportOrigin: #head; button: trigger; collisionEntities: .navmesh; landingMaxAngle: 80"
-					vive-controls="hand: left"
-					oculus-touch-controls="hand: left"
-					microsoft-motion-controls="hand: left"
-					daydream-controls="left" gearvr-controls="left"
-					x-button-listener y-button-listener>
-					</a-entity>
-				
-					<a-entity teleport-controls="cameraRig: #rig; teleportOrigin: #head; button: trigger; collisionEntities: .navmesh; landingMaxAngle: 80"
-					vive-controls="hand: right"
-					microsoft-motion-controls="hand: right"
-					oculus-touch-controls="hand: right"
-					daydream-controls="right" gearvr-controls="right"
-					a-button-listener b-button-listener grip-listener surface-listener>
-					</a-entity>
-			</a-entity>
+		<a-entity reticle geometry="primitive: ring; radiusInner: 0.04; radiusOuter: 0.05" material="color: #aaaaaa"></a-entity>
 
 </a-scene>
-
+ <script>
+        this.scene = document.querySelector('a-scene');
+        this.scene.renderer.gammaOutput = true;
+        this.diorama = document.querySelector('#diorama');
+        this.reticle = document.querySelector('[reticle]');
+        this.touched = this.touched.bind(this)
+        this.reticle.addEventListener('touched', this.touched);
+        function touched(){
+          this.reticle.removeEventListener('touched', this.touched);
+          this.diorama.setAttribute('position', this.reticle.getAttribute('position'));
+          var rotationOnClick = Math.atan2( ( this.scene.camera.getWorldPosition().x - this.diorama.getAttribute('position').x ), ( this.scene.camera.getWorldPosition().z - this.diorama.getAttribute('position').z ) );
+          rotationOnClick = THREE.Math.radToDeg(rotationOnClick) - 90;
+          this.diorama.setAttribute('rotation', {y: rotationOnClick});
+          this.reticle.parentNode.removeChild(this.reticle);
+          this.diorama.setAttribute('visible', true);
+        }
+  </script>
 <script>
 
 	function startScene() {
