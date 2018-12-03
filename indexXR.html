@@ -4,13 +4,11 @@
 		<title>The Parthenon Project</title>
 		<meta name="description" content="Exploring the Parthenon and the Acropolis in XR" />
 		
-		<script src="./js/aframe-master-xr.js"></script>
+		<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
 		<script src="./js/three.xr.js"></script>
 		<script src="./js/aframe-xr.js"></script>
 		<script src="./components/aframe-lod.js"></script>
 		<script src="./components/camera-cube-env.js"></script>
-		<script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.2.0/dist/aframe-extras.min.js"></script>
-		<script src="./components/aframe-teleport-controls.js"></script>
 		<script src="./components/normal-scale-component.js"></script>
 		<script src="./components/object-visible-event-component.js"></script>
 		<style>
@@ -19,78 +17,6 @@
 			}
 			body {
 				font: 100%;
-			}
-			#loadScreen {
-				background-image: url("./textures/loadScreen.jpg");
-				background-color: #000000;
-				height: 100%; 
-				background-position: center;
-				background-repeat: no-repeat;
-				background-size: cover;
-			}
-			#loadTitle {
-				position: absolute;
-				left: 6%;
-				top: 10%;
-				color: #FFFFFF;
-				font: 400 2.1rem/2.6 Fira Sans,Helvetica,Arial,sans-serif;
-			}
-			#loadBarGroup {
-				width: 20%;
-				height: 10%;
-				position: absolute;
-				bottom: 5%;
-				right: 10%;
-			}
-			#loadText {
-				padding-bottom: 10px;
-				font: 400 1.1rem/1.6 Fira Sans,Helvetica,Arial,sans-serif;
-				color: #FFFFFF;
-			}
-			#loadBar {
-				float:left;
-				padding-left: 10px;
-				margin-top: 5px;
-				background-color: #FFFFFF;
-				color: #FFFFFF;
-				width: 10px;
-				height: 5px;
-			
-			}
-			#loadAmt {
-				margin-left:5px;
-				float: left;
-				width:30px;
-				font: 400 .9rem/1.3 Fira Sans,Helvetica,Arial,sans-serif;
-				color: #FFFFFF;
-			}
-			#loadBlackout {
-				position: absolute;
-				left: 0;
-				top: 0;
-				background-color: #000000;
-				height: 1280px;
-				width: 2048px;
-				opacity: 0.0;
-			}
-			#ascene {
-				opacity: 0;
-			}
-			#preloaderDiv {
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				left: 0px;
-				top: 0px;
-			}
-			
-			li {
-				padding: 20px;
-			}
-			.a-enter-vr {
-				position: fixed;
-				right: 2%;
-				bottom: 2%;
 			}
 		</style>
 	</head>
@@ -138,10 +64,8 @@
 				<a-asset-item id="sanctuaryD" src="./Objects/ParthenonDoorsCombined.glb" ></a-asset-item>
 
 			</a-assets>
-			
-			<a-entity xr="ar: true; vr: false; magicWindow: false"></a-entity>
 
-			<a-entity id="diorama" position="0 0.5 1"  scale="0.1 0.1 0.1" visible="false">
+			<a-entity id="diorama" position="0 0 0"  scale=".02 .02 .02" visible="false">
 			
 				<a-entity id="acropolis1" gltf-model="#acropolis" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
@@ -162,7 +86,7 @@
 				<a-entity id="walkMesh" class="navmesh" gltf-model="#acropolisWalk" position="0 0 0" scale="1 1 1" nav-mesh="" visible="false">
 				</a-entity>
 
-				<a-entity position="85.810 55.49 -133" id="spotlight" light="castShadow:false;penumbra:0.78;angle:20.59;target:#lightTarget;shadowMapHeight:2048;shadowMapWidth:2048;shadowCameraFov:50;shadowCameraFar: 300; shadowCameraVisible: false; shadowCameraTop: 139.86; shadowCameraRight: 70.2; shadowCameraBottom: -84.5; shadowCameraLeft: -76.68">
+				<a-entity position="85.810 55.49 -133" id="spotlight" light="castShadow:true;penumbra:0.78;angle:20.59;target:#lightTarget;shadowMapHeight:2048;shadowMapWidth:2048;shadowCameraFov:50;shadowCameraFar: 300; shadowCameraVisible: false; shadowCameraTop: 139.86; shadowCameraRight: 70.2; shadowCameraBottom: -84.5; shadowCameraLeft: -76.68">
 				</a-entity>
 
 				<a-entity light="type:hemisphere;groundColor:#4a4137;color:#ceeaf7;angle:0;distance:100;decay:0;intensity:0.210;target:#acropolis1" rotation="0 0 0.01" visible="">
@@ -187,7 +111,7 @@
 					<a-lod>
 						<a-entity id="p1" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -196,7 +120,7 @@
 					<a-lod>
 						<a-entity id="p2" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -205,7 +129,7 @@
 					<a-lod>
 						<a-entity id="p3" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -214,7 +138,7 @@
 					<a-lod>
 						<a-entity id="p4" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -222,7 +146,7 @@
 					<a-lod>
 						<a-entity id="p5" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -231,7 +155,7 @@
 					<a-lod>
 						<a-entity id="p6" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -240,7 +164,7 @@
 					<a-lod>
 						<a-entity id="p7" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -249,7 +173,7 @@
 					<a-lod>
 						<a-entity id="p8" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -257,7 +181,7 @@
 					<a-lod>
 						<a-entity id="p9" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -266,7 +190,7 @@
 					<a-lod>
 						<a-entity id="p10" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -275,7 +199,7 @@
 					<a-lod>
 						<a-entity id="p11" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -284,7 +208,7 @@
 					<a-lod>
 						<a-entity id="pe1" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -293,7 +217,7 @@
 					<a-lod>
 						<a-entity id="pe2" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -302,7 +226,7 @@
 					<a-lod>
 						<a-entity id="pe3" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -311,7 +235,7 @@
 					<a-lod>
 						<a-entity id="pe4" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -320,7 +244,7 @@
 					<a-lod>
 						<a-entity id="pe5" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -329,7 +253,7 @@
 					<a-lod>
 						<a-entity id="pe6" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -338,7 +262,7 @@
 					<a-lod>
 						<a-entity id="pe7" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -347,7 +271,7 @@
 					<a-lod>
 						<a-entity id="pe8" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -356,7 +280,7 @@
 					<a-lod>
 						<a-entity id="pe9" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -365,7 +289,7 @@
 					<a-lod>
 						<a-entity id="pe10" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -374,7 +298,7 @@
 					<a-lod>
 						<a-entity id="pp1" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -383,7 +307,7 @@
 					<a-lod>
 						<a-entity id="pp2" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -392,7 +316,7 @@
 					<a-lod>
 						<a-entity id="pp3" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -401,7 +325,7 @@
 					<a-lod>
 						<a-entity id="pp4" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -410,7 +334,7 @@
 					<a-lod>
 						<a-entity id="pp5" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -419,7 +343,7 @@
 					<a-lod>
 						<a-entity id="pp6" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 2" position="0 -.5 0">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -429,8 +353,9 @@
 		<a-entity reticle geometry="primitive: ring; radiusInner: 0.04; radiusOuter: 0.05" material="color: #aaaaaa"></a-entity>
 
 </a-scene>
- <script>
-        this.scene = document.querySelector('a-scene');
+<script>
+
+		this.scene = document.querySelector('a-scene');
         this.scene.renderer.gammaOutput = true;
         this.diorama = document.querySelector('#diorama');
         this.reticle = document.querySelector('[reticle]');
@@ -445,9 +370,7 @@
           this.reticle.parentNode.removeChild(this.reticle);
           this.diorama.setAttribute('visible', true);
         }
-  </script>
-<script>
-
+		
 	function startScene() {
 		//document.querySelector('a-scene').style.opacity = '1.0';
 		//document.querySelector('a-scene').style.transparent = 'false';
@@ -660,10 +583,6 @@
 
 		}
 
-	});
-	
-	document.getElementById( 'acropolis' ).addEventListener('loaded', function(event) {
-		startScene();
 	});
 
 	//document.getElementById("rig").components.position.el.object3D.position.set(49.96, -31.290, -166.997);
