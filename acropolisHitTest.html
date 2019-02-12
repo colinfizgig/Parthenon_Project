@@ -68,6 +68,11 @@
 
 				// Called during construction to allow the app to populate this.scene
 				initializeScene(){
+					
+					//Not sure about this (below)
+					//It is part of the example code but a box is not initially placed
+					//I do not see the initial setup box when running the original example
+	
 					// Add a box at the scene origin
 					let box = new THREE.Mesh(
 						new THREE.BoxBufferGeometry(0.1, 0.1, 0.1),
