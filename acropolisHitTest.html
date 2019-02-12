@@ -119,11 +119,40 @@
 					})
 				}
 
-				// Instantiate a GLTF loader
-				var loader = new THREE.GLTFLoader();
+				// // Instantiate a GLTF loader
+				// var loader = new THREE.GLTFLoader();
 
-				// Load a glTF resource
-				loader.load(
+				// // Load a glTF resource
+				// loader.load(
+				// 	// resource URL
+				// 	'C:/Users/klee2/Documents/VIP/AcropolisModel.gltf',
+				// 	// called when the resource is loaded
+				// 	function ( gltf ) {
+				// 		// gltf.scene.traverse( function (child) ) {
+				// 		// 	if (child.isMesh) {
+				// 		// 		child.geometry.center()
+				// 		// 	}
+				// 		//}
+				// 	//Set Scale
+				// 	gltf.scene.scale.set(10,10,10) 
+				// 	scene.add( gltf.scene ) 
+				// 	//, (xhr) => xhr, ( err ) => console.error(e);
+
+				// 	gltf.animations; // Array<THREE.AnimationClip>
+				// 	gltf.scene; // THREE.Scene
+				// 	gltf.scenes; // Array<THREE.Scene>
+				// 	gltf.cameras; // Array<THREE.Camera>
+				// 	gltf.asset; // Object
+
+				// );
+
+
+			// Inserts GLTF to indicate the location of an anchor offset
+				_createSceneGraphNode(){
+					// Instantiate a GLTF loader
+					var loader = new THREE.GLTFLoader();
+					// Load a glTF resource
+					loader.load(
 					// resource URL
 					'C:/Users/klee2/Documents/VIP/AcropolisModel.gltf',
 					// called when the resource is loaded
@@ -133,25 +162,22 @@
 						// 		child.geometry.center()
 						// 	}
 						//}
-					//Set Scale
-					gltf.scene.scale.set(10,10,10) 
-					scene.add( gltf.scene ) 
+						//Set Scale
+						gltf.scene.scale.set(10,10,10) 
+						scene.add( gltf.scene ) 
 					//, (xhr) => xhr, ( err ) => console.error(e);
 
-					gltf.animations; // Array<THREE.AnimationClip>
-					gltf.scene; // THREE.Scene
-					gltf.scenes; // Array<THREE.Scene>
-					gltf.cameras; // Array<THREE.Camera>
-					gltf.asset; // Object
+						gltf.animations; // Array<THREE.AnimationClip>
+						gltf.scene; // THREE.Scene
+						gltf.scenes; // Array<THREE.Scene>
+						gltf.cameras; // Array<THREE.Camera>
+						gltf.asset; // Object 
+					}
 
-				);
-
-
-			// Inserts GLTF to indicate the location of an anchor offset
-				_createSceneGraphNode(){
-				let group = new THREE.Group()
-				group.add(gltf)
-				return group
+					);
+					let group = new THREE.Group()
+					group.add(gltf)
+					return group
 				}
 
 			}
