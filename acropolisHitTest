@@ -125,7 +125,7 @@
 				// Load a glTF resource
 				loader.load(
 					// resource URL
-					'C:/Users/klee2/Documents/VIP/AcropolisModel.gltf' ,
+					'C:/Users/klee2/Documents/VIP/AcropolisModel.gltf',
 					// called when the resource is loaded
 					function ( gltf ) {
 						// gltf.scene.traverse( function (child) ) {
