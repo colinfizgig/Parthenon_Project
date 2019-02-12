@@ -132,7 +132,7 @@
 						// 	if (child.isMesh) {
 						// 		child.geometry.center()
 						// 	}
-						// }
+						//}
 					//Set Scale
 					gltf.scene.scale.set(10,10,10)
 					scene.add( gltf.scene ) 
