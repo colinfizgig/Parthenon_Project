@@ -122,44 +122,29 @@
 				// Instantiate a GLTF loader
 				var loader = new THREE.GLTFLoader();
 
-
-				/**
-				ADD IN CODE TO RESIZE GLTF MODEL (~150% smaller)
-				**/
-
-			    //Variables
-				    // var mroot = yourScene;
-				    // var bbox = new THREE.Box3().setFromObject(mroot);
-				    // var cent = bbox.getCenter(new THREE.Vector3());
-				    // var size = bbox.getSize(new THREE.Vector3());
-
-				    // //Rescale the object to normalized space
-				    // var maxAxis = Math.max(size.x, size.y, size.z);
-				    // mroot.scale.multiplyScalar(1.0 / maxAxis);
-				    // bbox.setFromObject(mroot);
-				    // bbox.getCenter(cent);
-				    // bbox.getSize(size);
-				    // //Reposition to 0,halfY,0
-				    // mroot.position.copy(cent).multiplyScalar(-1);
-				    // mroot.position.y-= (size.y * 0.5);
-
-
 				// Load a glTF resource
 				loader.load(
-				// resource URL
-				'C:/Users/klee2/Documents/VIP/AcropolisModel.gltf')
-				// called when the resource is loaded
-				function ( gltf ) {
+					// resource URL
+					'C:/Users/klee2/Documents/VIP/AcropolisModel.gltf',
+					// called when the resource is loaded
+					function ( gltf ) {
+						// gltf.scene.traverse( function (child) ) {
+						// 	if (child.isMesh) {
+						// 		child.geometry.center()
+						// 	}
+						//}
+					//Set Scale
+					gltf.scene.scale.set(10,10,10) 
+					scene.add( gltf.scene ) 
+					//, (xhr) => xhr, ( err ) => console.error(e);
 
-				scene.add( gltf.scene );
+					gltf.animations; // Array<THREE.AnimationClip>
+					gltf.scene; // THREE.Scene
+					gltf.scenes; // Array<THREE.Scene>
+					gltf.cameras; // Array<THREE.Camera>
+					gltf.asset; // Object
 
-				gltf.animations; // Array<THREE.AnimationClip>
-				gltf.scene; // THREE.Scene
-				gltf.scenes; // Array<THREE.Scene>
-				gltf.cameras; // Array<THREE.Camera>
-				gltf.asset; // Object
-
-				}
+				);
 
 
 			// Inserts GLTF to indicate the location of an anchor offset
