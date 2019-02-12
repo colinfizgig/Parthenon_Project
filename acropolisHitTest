@@ -90,6 +90,9 @@
 				updateScene(frame){
 				}
 
+				//Tracks count of how many objects have been placed
+				var count = 0;
+
 				// Save screen taps as normalized coordinates for use in this.updateScene
 				_onTouchStart(ev){
 					if (!ev.touches || ev.touches.length === 0) {
@@ -102,7 +105,10 @@
 
 					// Attempt a hit test using the normalized screen coordinates
 					this.session.hitTest(x, y).then(anchorOffset => {
-						if(anchorOffset === null){
+						if (count >= 1) {
+							this._messageEl.innerHTML = 'Object alreafy placed.'
+							break;
+						} else if (anchorOffset === null){
 							this._messageEl.innerHTML = 'miss'
 						} else {
 							this._messageEl.innerHTML = 'hit'
@@ -147,13 +153,6 @@
 				group.add(gltf)
 				return group
 				}
-
-
-
-			/**
-			ADD IN CODE TO ENSURE THAT ONCE THE GLTF MODEL IS PLACED, 
-			ANOTHER CANNOT BE PLACED
-			**/
 
 			}
 
