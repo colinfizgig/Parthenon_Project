@@ -157,11 +157,11 @@
 					'C:/Users/klee2/Documents/VIP/AcropolisModel.gltf',
 					// called when the resource is loaded
 					function ( gltf ) {
-						// gltf.scene.traverse( function (child) ) {
-						// 	if (child.isMesh) {
-						// 		child.geometry.center()
-						// 	}
-						//}
+						 gltf.scene.traverse( function (child) ) {
+						 	if (child.isMesh) {
+						 		child.geometry.center()
+						 	}
+						}
 						//Set Scale
 						gltf.scene.scale.set(10,10,10) 
 						scene.add( gltf.scene ) 
