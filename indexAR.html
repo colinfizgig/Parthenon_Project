@@ -1,0 +1,664 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<title>The Parthenon Project</title>
+		<meta name="description" content="Exploring the Parthenon and the Acropolis in XR" />
+		
+		<script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+		<script src="https://rawgit.com/google-ar/three.ar.js/master/dist/three.ar.js"></script>
+		<script src="https://rawgit.com/chenzlabs/aframe-ar/master/dist/aframe-ar.js"></script>
+		<script src="./components/aframe-lod.js"></script>
+		<script src="./components/camera-cube-env.js"></script>
+		<script src="./components/normal-scale-component.js"></script>
+		<script src="./components/object-visible-event-component.js"></script>
+		<style>
+			html {
+				font-size: 1.5vm;
+			}
+			body {
+				font: 100%;
+			}
+			#loadScreen {
+				background-image: url("./textures/loadScreen.jpg");
+				background-color: #000000;
+				height: 100%; 
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+			#loadTitle {
+				position: absolute;
+				left: 6%;
+				top: 10%;
+				color: #FFFFFF;
+				font: 400 2.1rem/2.6 Fira Sans,Helvetica,Arial,sans-serif;
+			}
+			#loadBarGroup {
+				width: 20%;
+				height: 10%;
+				position: absolute;
+				bottom: 5%;
+				right: 10%;
+			}
+			#loadText {
+				padding-bottom: 10px;
+				font: 400 1.1rem/1.6 Fira Sans,Helvetica,Arial,sans-serif;
+				color: #FFFFFF;
+			}
+			#loadBar {
+				float:left;
+				padding-left: 10px;
+				margin-top: 5px;
+				background-color: #FFFFFF;
+				color: #FFFFFF;
+				width: 10px;
+				height: 5px;
+			
+			}
+			#loadAmt {
+				margin-left:5px;
+				float: left;
+				width:30px;
+				font: 400 .9rem/1.3 Fira Sans,Helvetica,Arial,sans-serif;
+				color: #FFFFFF;
+			}
+			#loadBlackout {
+				position: absolute;
+				left: 0;
+				top: 0;
+				background-color: #000000;
+				height: 1280px;
+				width: 2048px;
+				opacity: 0.0;
+			}
+			#ascene {
+				opacity: 0;
+			}
+			#preloaderDiv {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				left: 0px;
+				top: 0px;
+			}
+			
+			li {
+				padding: 20px;
+			}
+			.a-enter-vr {
+				position: fixed;
+				right: 2%;
+				bottom: 2%;
+			}
+		</style>
+	</head>
+	
+	<body class="a-body">
+
+		<a-scene id="ascene" background="color:#5f5f5f; opacity:0;" class="fullscreen" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="type:pcfsoft" visible="true" ar>
+
+			<a-assets>
+				<img id="sky" src="./textures/AthensSky.jpg" crossorigin="anonymous">
+				<img id="tp1" src="./textures/tp1.png" crossorigin="anonymous">
+				<img id="tp2" src="./textures/tp2.png" crossorigin="anonymous">
+				<img id="tp3" src="./textures/tp3.png" crossorigin="anonymous">
+				<img id="tp4" src="./textures/tp4.png" crossorigin="anonymous">
+				<img id="tp5" src="./textures/tp5.png" crossorigin="anonymous">
+				<img id="tp6" src="./textures/tp6.png" crossorigin="anonymous">
+				<img id="tp7" src="./textures/tp7.png" crossorigin="anonymous">
+				<img id="tp8" src="./textures/tp8.png" crossorigin="anonymous">
+				<img id="tp9" src="./textures/tp9.png" crossorigin="anonymous">
+				<img id="tp10" src="./textures/tp10.png" crossorigin="anonymous">
+				<img id="tp11" src="./textures/tp11.png" crossorigin="anonymous">
+				<img id="tpE1" src="./textures/tpE1.png" crossorigin="anonymous">
+				<img id="tpE2" src="./textures/tpE2.png" crossorigin="anonymous">
+				<img id="tpE3" src="./textures/tpE3.png" crossorigin="anonymous">
+				<img id="tpE4" src="./textures/tpE4.png" crossorigin="anonymous">
+				<img id="tpE5" src="./textures/tpE5.png" crossorigin="anonymous">
+				<img id="tpE6" src="./textures/tpE6.png" crossorigin="anonymous">
+				<img id="tpE7" src="./textures/tpE7.png" crossorigin="anonymous">
+				<img id="tpE8" src="./textures/tpE8.png" crossorigin="anonymous">
+				<img id="tpE9" src="./textures/tpE9.png" crossorigin="anonymous">
+				<img id="tpE10" src="./textures/tpE10.png" crossorigin="anonymous">
+				<img id="tpP1" src="./textures/tpP1.png" crossorigin="anonymous">
+				<img id="tpP2" src="./textures/tpP2.png" crossorigin="anonymous">
+				<img id="tpP3" src="./textures/tpP3.png" crossorigin="anonymous">
+				<img id="tpP4" src="./textures/tpP4.png" crossorigin="anonymous">
+				<img id="tpP5" src="./textures/tpP5.png" crossorigin="anonymous">
+				<img id="tpP6" src="./textures/tpP6.png" crossorigin="anonymous">
+				<a-asset-item id="acropolis" src="./Objects/AcropolisCombined.glb" ></a-asset-item>
+				<a-asset-item id="acropolisWalk" src="./Objects/AcropolisWalk.glb" ></a-asset-item>
+				<a-asset-item id="athenaParthenos" src="./Objects/AthenaParthenos.glb" ></a-asset-item>
+				
+				<a-asset-item id="athenaPromachosH" src="./Objects/PromachosLOD0.glb" ></a-asset-item>
+		
+				<a-asset-item id="cariatides" src="./Objects/Cariatides.glb" ></a-asset-item>
+				<a-asset-item id="sanctuaryD" src="./Objects/ParthenonDoorsCombined.glb" ></a-asset-item>
+
+			</a-assets>
+
+			<a-sky src="#sky" material="" geometry="" position="0 0 0" rotation="0 140 0"></a-sky>
+
+			<a-entity id="worldOffset" position="0 0 0" scale="0.05 0.05 0.05">
+			
+				<a-entity id="acropolis1" gltf-model="#acropolis" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				</a-entity>
+				
+				<a-entity id="athenaStatue1" gltf-model="#athenaParthenos" camera-cube-env="resolution:512; interval: 2000" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				</a-entity>
+				
+				<a-entity id="athenaStatue2" position="55.107 -1.325 -61.014" scale="5.352 5.352 5.352" rotation="180 -10.4 180">
+					<a-entity id="athenaStatue2H" gltf-model="#athenaPromachosH" shadow="" position="0 0 0" scale="1 1 1" cube-env-map="path: ./textures/; extension: jpg;"></a-entity>
+				</a-entity>
+				<a-entity id="wives" position="0 0 0" 0>
+					<a-entity id="cariatidsHigh" gltf-model="#cariatides" shadow="" position="0 0 0" scale="1 1 1" cube-env-map="path: ./textures/; extension: jpg;" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0"></a-entity>
+				</a-entity>
+
+				<a-entity id="sanctuaryDoors" gltf-model="#sanctuaryD" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				</a-entity>
+
+				<a-entity id="walkMesh" class="navmesh" gltf-model="#acropolisWalk" position="0 0 0" scale="1 1 1" nav-mesh="" visible="false">
+				</a-entity>
+
+				<a-entity position="85.810 55.49 -133" id="spotlight" light="castShadow:true;penumbra:0.78;angle:20.59;target:#lightTarget;shadowMapHeight:2048;shadowMapWidth:2048;shadowCameraFov:50;shadowCameraFar: 300; shadowCameraVisible: false; shadowCameraTop: 139.86; shadowCameraRight: 70.2; shadowCameraBottom: -84.5; shadowCameraLeft: -76.68">
+				</a-entity>
+
+				<a-entity light="type:hemisphere;groundColor:#4a4137;color:#ceeaf7;angle:0;distance:100;decay:0;intensity:0.210;target:#acropolis1" rotation="0 0 0.01" visible="">
+				</a-entity>
+			
+			
+				<a-entity  id="brazierLight-2" position=" 2.858 1.743 4.981" light="type:point;castShadow:true;distance:100;penumbra:0.4;shadowCameraFar:100;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;color:#ffffff;decay:10;intensity:0.5" >
+				</a-entity>
+	 
+				<a-entity id="brazierLight" position=" -2.758 1.651 4.969" light="type:point;castShadow:true;distance:100;penumbra:0.4;shadowCameraFar:100;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;color:#ffffff;decay:10;intensity:0.5">
+				</a-entity>
+		
+				<a-entity id="Doorlight" position="0 3.207 24.208" light="type:spot;castShadow:true;distance:50;penumbra:1.0;shadowCameraFar:150;shadowCameraFov:60;shadowCameraNear:0.38;shadowCameraTop:30;shadowCameraRight:30;shadowCameraBottom:-30;shadowCameraLeft:-30;decay:1.5;angle:40;color:#e1f4ff" rotation="-5.58 0 0" visible="" target="#StatueLightTarget">
+				</a-entity>
+			
+				<a-entity id="lightTarget" position="59.121 0 -69.462">
+				</a-entity>
+				<a-entity id="StatueLightTarget" position="0 10 0">
+				</a-entity>
+	
+				<a-entity id="tourPoint1" position="51 -30.5 -172" rotation="0 0 0">
+					<a-lod>
+						<a-entity id="p1" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+	
+				<a-entity id="tourPoint2" position="53 -15 -135.538" rotation="0 -175.680 0">
+					<a-lod>
+						<a-entity id="p2" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPoint3" position="56.62 -12.0 -129.711" rotation="0 -176.457 0">
+					<a-lod>
+						<a-entity id="p3" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPoint4" position="51.799 -7.620 -119.681" rotation="0 -178.430 0">
+					<a-lod>
+						<a-entity id="p4" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				<a-entity id="tourPoint5" position="62.426 -5.168 -113.794" rotation="0 -88.445 0">
+					<a-lod>
+						<a-entity id="p5" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPoint6" position="38.150 -6.000 -117.486" rotation="0 94.435 0">
+					<a-lod>
+						<a-entity id="p6" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPoint7" position="66.000 -10.206 -130" rotation="0 -89.988 0">
+					<a-lod>
+						<a-entity id="p7" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPoint8" position="42.700 -7.630 -125.891" rotation="0 -176.021 0">
+					<a-lod>
+						<a-entity id="p8" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				<a-entity id="tourPoint9" position="33.046 -7.443 -128.318" rotation="0 73.363 0">
+					<a-lod>
+						<a-entity id="p9" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPoint10" position="42.712 -7.800 -128.926" rotation="0 -16.137 0">
+					<a-lod>
+						<a-entity id="p10" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPoint11" position="58.808 -4.839 -91.984" rotation="0 -176.075 0">
+					<a-lod>
+						<a-entity id="p11" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE1" position="58.427 0.346 16.310" rotation="0 -8.543 0">
+					<a-lod>
+						<a-entity id="pe1" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE2" position="58.898 1.451 11.635" rotation="0 -4.7114364849641 0">
+					<a-lod>
+						<a-entity id="pe2" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE3" position="45.266 0.983 -12.099" rotation="0 1.035 0">
+					<a-lod>
+						<a-entity id="pe3" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE4" position="52.00907215543766 0.48606749150435924 0.07512708617217356" rotation="0 -99.62589532579756 0">
+					<a-lod>
+						<a-entity id="pe4" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE5" position="68.339 -2.456 -9.062" rotation="0 172.9159318386946 0">
+					<a-lod>
+						<a-entity id="pe5" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE6" position="76.46710283484497 -2.1383907026961193 -2.159337254107143" rotation="0 82.61293664586405 0">
+					<a-lod>
+						<a-entity id="pe6" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE7" position="69.098 -2.342 -3.983" rotation="0 83.28203245705544 0">
+					<a-lod>
+						<a-entity id="pe7" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE8" position="67.903 -2.342 -0.011" rotation="0 83.11304336101236 0">
+					<a-lod>
+						<a-entity id="pe8" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE9" position="69.3729962452584 -2.006818988636814 13.36480718875356" rotation="0 84.58014623536522 0">
+					<a-lod>
+						<a-entity id="pe9" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointE10" position="78.20992782715126 -2.3868347869278974 9.336792950186435" rotation="0 -88.75944270456019 0">
+					<a-lod>
+						<a-entity id="pe10" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointP1" position="22.83640027993406 1.147209544687465 7.391706069099442" rotation="0 91.60529268594183 0">
+					<a-lod>
+						<a-entity id="pp1" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointP2" position="-2.262 2.782 24.761" rotation="0 91.60529268594183 0">
+					<a-lod>
+						<a-entity id="pp2" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointP3" position="-2.666 2.740 6.436" rotation="0 -1.3226573706905407 0">
+					<a-lod>
+						<a-entity id="pp3" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointP4" position="-1.586 2.620 -24.983" rotation="0 91.60529268594183 0">
+					<a-lod>
+						<a-entity id="pp4" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointP5" position="50.642 -2.562 -62.838" rotation="0 178.444 0">
+					<a-lod>
+						<a-entity id="pp5" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+				
+				<a-entity id="tourPointP6" position="36.113 -4.105 -84.892" rotation="0 87.900 0">
+					<a-lod>
+						<a-entity id="pp6" lod-level="level: 0" object-visible-event="">
+						</a-entity>
+						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 7" position="0 -.5 0">
+						</a-entity>
+					</a-lod>
+				</a-entity>
+			
+					
+			</a-entity>
+		
+		
+	 
+			<a-entity id="rig" movement-controls="controls: keyboard, touch; speed: 0.2; constrainToNavMesh: false;" position="1.0 0 0" rotation="0 180 0">
+
+					<a-entity id="head" position="0 1.6 0" camera="">
+					</a-entity>
+
+			</a-entity>
+
+</a-scene>
+
+<script>
+
+	function startScene() {
+		document.querySelector('a-scene').style.opacity = '1.0';
+		document.querySelector('a-scene').style.transparent = 'false';
+		document.querySelector('#loadBlackout').style.opacity = '1.0';
+	}
+	
+	document.querySelector( 'a-scene' ).addEventListener('objectVisible', function(event) {
+		
+		switch(event.detail.visibleObject.id) {
+			case 'p1':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent1' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp1'></a-entity>";
+				break;
+			case 'p2':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent2' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp2'></a-entity>";
+				break;
+			case 'p3':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent3' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp3'></a-entity>";
+				break;
+			case 'p4':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent4' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp4'></a-entity>";
+				break;
+			case 'p5':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent5' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp5'></a-entity>";
+				break;
+			case 'p6':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent6' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp6'></a-entity>";
+				break;
+			case 'p7':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent7' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp7'></a-entity>";
+				break;
+			case 'p8':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent8' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp8'></a-entity>";
+				break;
+			case 'p9':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent9' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp9'></a-entity>";
+				break;
+			case 'p10':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent10' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp10'></a-entity>";
+				break;
+			case 'p11':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent11' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tp11'></a-entity>";
+				break;
+			case 'pe1':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE1' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE1'></a-entity>";
+				break;
+			case 'pe2':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE2' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE2'></a-entity>";
+				break;
+			case 'pe3':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE3' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE3'></a-entity>";
+				break;
+			case 'pe4':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE4' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE4'></a-entity>";
+				break;
+			case 'pe5':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE5' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE5'></a-entity>";
+				break;
+			case 'pe6':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE6' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE6'></a-entity>";
+				break;
+			case 'pe7':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE7' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE7'></a-entity>";
+				break;
+			case 'pe8':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE8' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE8'></a-entity>";
+				break;
+			case 'pe9':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE9' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE9'></a-entity>";
+				break;
+			case 'pe10':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE10' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpE10'></a-entity>";
+				break;
+			case 'pp1':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP1' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpP1'></a-entity>";
+				break;
+			case 'pp2':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP2' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpP2'></a-entity>";
+				break;
+			case 'pp3':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP3' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpP3'></a-entity>";
+				break;
+			case 'pp4':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP4' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpP4'></a-entity>";
+				break;
+			case 'pp5':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP5' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpP5'></a-entity>";
+				break;
+			case 'pp6':
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP6' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat; src: #tpP6'></a-entity>";
+				break;
+			default:
+				event.detail.visibleObject.innerHTML = "<a-entity id='noHud' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #ffffff; shader: flat></a-entity>";
+
+		}
+
+	});
+	document.querySelector( 'a-scene' ).addEventListener('objectNotVisible', function(event) {
+		switch(event.detail.visibleObject.id) {
+			case 'p1':
+				document.getElementById("hudContent1").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent1' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p2':
+				document.getElementById("hudContent2").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent2' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p3':
+				document.getElementById("hudContent3").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent3' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p4':
+				document.getElementById("hudContent4").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent4' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p5':
+				document.getElementById("hudContent5").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent5' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p6':
+				document.getElementById("hudContent6").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent6' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p7':
+				document.getElementById("hudContent7").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent7' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p8':
+				document.getElementById("hudContent8").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent8' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p9':
+				document.getElementById("hudContent9").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent9' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p10':
+				document.getElementById("hudContent10").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent10' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'p11':
+				document.getElementById("hudContent11").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContent11' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe1':
+				document.getElementById("hudContentE1").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE1' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe2':
+				document.getElementById("hudContentE2").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE2' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe3':
+				document.getElementById("hudContentE3").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE3' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe4':
+				document.getElementById("hudContentE4").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE4' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe5':
+				document.getElementById("hudContentE5").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE5' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe6':
+				document.getElementById("hudContentE6").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE6' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe7':
+				document.getElementById("hudContentE7").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE7' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe8':
+				document.getElementById("hudContentE8").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE8' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe9':
+				document.getElementById("hudContentE9").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE9' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pe10':
+				document.getElementById("hudContentE10").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentE10' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pp1':
+				document.getElementById("hudContentP1").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP1' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pp2':
+				document.getElementById("hudContentP2").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP2' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pp3':
+				document.getElementById("hudContentP3").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP3' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pp4':
+				document.getElementById("hudContentP4").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP4' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pp5':
+				document.getElementById("hudContentP5").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP5' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			case 'pp6':
+				document.getElementById("hudContentP6").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='hudContentP6' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+				break;
+			default:
+				document.getElementById("noHud").removeAttribute("material");
+				event.detail.visibleObject.innerHTML = "<a-entity id='noHud' geometry='primitive:plane;height:4; width:2' position='0 -.5 0' material='transparent: true; color: #0042ff; shader: flat; opacity: 0.9'></a-entity>";
+
+		}
+
+	});
+	
+	document.getElementById( 'acropolis' ).addEventListener('loaded', function(event) {
+		startScene();
+	});
+
+	//document.getElementById("rig").components.position.el.object3D.position.set(49.96, -31.290, -166.997);
+	//position="49.96 -31.290 -166.997"
+	//document.getElementById("ascene").object3D.visible = true;
+</script>
+</body>
+</html>
