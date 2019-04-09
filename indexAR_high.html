@@ -9,6 +9,7 @@
 		<script src="https://rawgit.com/chenzlabs/aframe-ar/master/dist/aframe-ar.js"></script>
 		<script src="./components/aframe-lod.js"></script>
 		<script src="./components/camera-cube-env.js"></script>
+		<script src="./components/refract-cube-env.js"></script>
 		<script src="./components/normal-scale-component.js"></script>
 		<script src="./components/object-visible-event-component.js"></script>
 		<style>
@@ -152,13 +153,13 @@
 				</a-entity>
 				
 				<a-entity id="athenaStatue2" position="55.107 -1.325 -61.014" scale="5.352 5.352 5.352" rotation="180 -10.4 180">
-					<a-entity id="athenaStatue2H" gltf-model="#athenaPromachosH" shadow="" position="0 0 0" scale="1 1 1" camera-cube-env="resolution:512; interval: 1000"></a-entity>
+					<a-entity id="athenaStatue2H" gltf-model="#athenaPromachosH" shadow="" position="0 0 0" scale="1 1 1" camera-cube-env="resolution:256; interval: 1000"></a-entity>
 				</a-entity>
 				<a-entity id="wives" position="0 0 0" 0>
-					<a-entity id="cariatidsHigh" gltf-model="#cariatides" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0" camera-cube-env="resolution:512; interval: 1000"></a-entity>
+					<a-entity id="cariatidsHigh" gltf-model="#cariatides" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0" camera-cube-env="resolution:128; interval: 1000"></a-entity>
 				</a-entity>
 
-				<a-entity id="sanctuaryDoors" gltf-model="#sanctuaryD" camera-cube-env="resolution:512; interval: 3000" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				<a-entity id="sanctuaryDoors" gltf-model="#sanctuaryD" camera-cube-env="resolution:128; interval: 3000" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
 
 				<a-entity id="walkMesh" class="navmesh" gltf-model="#acropolisWalk" position="0 0 0" scale="1 1 1" nav-mesh="" visible="false">
@@ -182,7 +183,7 @@
 					<a-lod>
 						<a-entity id="p1" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 0.4" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: sphere; radius: 0.63" material="color: #ff0000;shader:flat; side: double" lod-level="level: 0.4" position="0 -.5 0" refract-cube-env="resolution:128; interval: 1000">
 						</a-entity>
 					</a-lod>
 				</a-entity>
@@ -191,7 +192,7 @@
 					<a-lod>
 						<a-entity id="p2" lod-level="level: 0" object-visible-event="">
 						</a-entity>
-						<a-entity id="hoff1" geometry="primitive: circle; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 0.4" position="0 -.5 0">
+						<a-entity id="hoff1" geometry="primitive: sphere; radius: 0.63" material="color: #ff0000;shader:flat;side: double" lod-level="level: 0.4" position="0 -.5 0" refract-cube-env="resolution:128; interval: 1000">
 						</a-entity>
 					</a-lod>
 				</a-entity>
