@@ -114,7 +114,7 @@
 		
 			
 
-		<a-scene id="ascene" background="color:#5f5f5f; opacity:0;" class="fullscreen" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="autoUpdate: true; type:pcfsoft" visible="true">
+		<a-scene id="ascene" background="color:#FFFFFF; opacity:0;" class="fullscreen" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="autoUpdate: true; type:pcfsoft" visible="true">
 
 			<a-assets timeout="10000">
 				<img id="sky" src="./textures/AthensSky.jpg" crossorigin="anonymous">
@@ -149,9 +149,9 @@
 				<a-asset-item id="acropolisWalk" src="./Objects/AcropolisWalk.glb" ></a-asset-item>
 				<a-asset-item id="athenaParthenos" src="./Objects/AthenaParthenos.glb" ></a-asset-item>
 				
-				<a-asset-item id="athenaPromachosH" src="./Objects/PromachosLOD0.glb" ></a-asset-item>
+				<a-asset-item id="athenaPromachosH" src="./Objects/PromachosLtBronzeLow.glb" ></a-asset-item>
 		
-				<a-asset-item id="cariatides" src="./Objects/Cariatides.glb" ></a-asset-item>
+				<a-asset-item id="cariatides" src="./Objects/Cariatides16k.glb" ></a-asset-item>
 				<a-asset-item id="sanctuaryD" src="./Objects/ParthenonDoorsCombined.glb" ></a-asset-item>
 
 			</a-assets>
@@ -167,10 +167,10 @@
 				</a-entity>
 				
 				<a-entity id="athenaStatue2" position="55.107 -1.325 -61.014" scale="5.352 5.352 5.352" rotation="180 -10.4 180">
-					<a-entity id="athenaStatue2H" gltf-model="#athenaPromachosH" shadow="" position="0 0 0" scale="1 1 1" cube-env-map="path: ./textures/; extension: jpg;"></a-entity>
+					<a-entity id="athenaStatue2H" gltf-model="#athenaPromachosH" shadow="" position="0 0 0" scale="1 1 1" camera-cube-env="resolution:512; interval: 2000"></a-entity>
 				</a-entity>
-				<a-entity id="wives" position="0 0 0" 0>
-					<a-entity id="cariatidsHigh" gltf-model="#cariatides" shadow="" position="0 0 0" scale="1 1 1" cube-env-map="path: ./textures/; extension: jpg;" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0"></a-entity>
+				<a-entity id="wives" position="54.82 0 -4.998" 0>
+					<a-entity id="cariatidsHigh" gltf-model="#cariatides" shadow="" position="0 0 0" camera-cube-env="resolution:256; interval: 2000"></a-entity>
 				</a-entity>
 
 				<a-entity id="sanctuaryDoors" gltf-model="#sanctuaryD" cube-env-map="path: ./textures/; extension: jpg;" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
