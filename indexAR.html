@@ -97,7 +97,7 @@
 
 		<a-scene id="ascene" background="color:#5f5f5f; transparent: true;" class="fullscreen" keyboard-shortcuts="" screenshot="" vr-mode-ui="" shadow="autoUpdate: true; type:pcfsoft" visible="true" ar>
 
-			<a-assets>
+			<a-assets timeout="100000">
 				<img id="tp1" src="./textures/tp1.png" crossorigin="anonymous">
 				<img id="tp2" src="./textures/tp2.png" crossorigin="anonymous">
 				<img id="tp3" src="./textures/tp3.png" crossorigin="anonymous">
@@ -127,7 +127,7 @@
 				<img id="tpP6" src="./textures/tpP6.png" crossorigin="anonymous">
 				<a-asset-item id="acropolis" src="./Objects/AcropolisCombined.glb" ></a-asset-item>
 				<a-asset-item id="acropolisWalk" src="./Objects/AcropolisWalk.glb" ></a-asset-item>
-				<a-asset-item id="athenaParthenos" src="./Objects/AthenaParthenos.glb" ></a-asset-item>
+				<a-asset-item id="athenaParthenos" src="./Objects/AthenaParthenosLow.glb" ></a-asset-item>
 				
 				<a-asset-item id="athenaPromachosH" src="./Objects/PromachosLtBronzeLow.glb" ></a-asset-item>
 		
@@ -148,7 +148,7 @@
 				<a-entity id="acropolis1" gltf-model="#acropolis" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
 				
-				<a-entity id="athenaStatue1" gltf-model="#athenaParthenos" camera-cube-env="resolution:512; interval: 2000" shadow="" position="0 0 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
+				<a-entity id="athenaStatue1" gltf-model="#athenaParthenos" camera-cube-env="resolution:512; interval: 2000" shadow="" position="0 -0.05 0" scale="1 1 1" scalenormals="normalScaleX: -1.0; normalScaleY: -1.0">
 				</a-entity>
 				
 				<a-entity id="athenaStatue2" position="55.107 -1.325 -61.014" scale="5.352 5.352 5.352" rotation="180 -10.4 180">
